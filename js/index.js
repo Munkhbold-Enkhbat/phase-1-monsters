@@ -23,14 +23,10 @@ function createMonsterElements() {
 }
 
 function getAllMonsters() {
-  fetch('http://localhost:3000/monsters')
-  .then(res => res.json())
-  .then(monsters => monsters.forEach((monster, index) => {
-    if(index < 49) {
-      renderOneMonster(monster)
-    }
-    displayMonsters(monster, index)
-  }))
+  let limit = 50
+  let page = 1
+  getData(limit, page)
+  displayMonsters(limit, page)
 }
 
 function renderOneMonster(monster) {
@@ -42,13 +38,30 @@ function renderOneMonster(monster) {
   document.querySelector('#monster-container').appendChild(div)
 }
 
-function displayMonsters(monster, index) {
+function displayMonsters(limit, page) {
   const forward = document.querySelector('#forward')
   const backward = document.querySelector('#back')
-  let currentMonster = {...monster}
-  back.addEventListener('click', () => {
-    if(monster.id > 50 && monster.id % 50 === 0) {
-      renderOneMonster
+  
+  backward.addEventListener('click', () => {
+    if(page > 1) {
+      page -= 1
+      getData(limit, page)  
     }
   })
+
+  forward.addEventListener('click', () => {
+    if(page < 21) {
+      page += 1
+      getData(limit, page)
+    }
+  })
+}
+
+function getData(num1, num2) {
+  document.querySelector('#monster-container').innerText = ''
+  fetch(`http://localhost:3000/monsters/?_limit=${num1}&_page=${num2}`)
+  .then(res => res.json())
+  .then(monsters => monsters.forEach(monster => {
+    renderOneMonster(monster)
+  }))
 }
