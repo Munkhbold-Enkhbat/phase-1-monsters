@@ -30,13 +30,9 @@ function getAllMonsters() {
 
 function renderOneMonster(monster) {
   const div = document.createElement('div')
-  const h2 = document.createElement('h2')
-  h2.innerText = monster.name
-  const h4 = document.createElement('h4')
-  h4.innerText = monster.age
-  const p = document.createElement('p')
-  p.innerText = monster.description
-  div.append(h2, h4, p)
-
+  div.innerHTML = `
+  <h2>${monster.name}</h2>
+  <h4>${monster.age}</h4>
+  <p>${monster.description}</p>`  
   document.querySelector('#monster-container').appendChild(div)
 }
