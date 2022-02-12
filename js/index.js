@@ -25,7 +25,12 @@ function createMonsterElements() {
 function getAllMonsters() {
   fetch('http://localhost:3000/monsters')
   .then(res => res.json())
-  .then(monsters => monsters.forEach(monster => renderOneMonster(monster)))
+  .then(monsters => monsters.forEach((monster, index) => {
+    if(index < 49) {
+      renderOneMonster(monster)
+    }
+    displayMonsters(monster, index)
+  }))
 }
 
 function renderOneMonster(monster) {
@@ -35,4 +40,15 @@ function renderOneMonster(monster) {
   <h4>${monster.age}</h4>
   <p>${monster.description}</p>`  
   document.querySelector('#monster-container').appendChild(div)
+}
+
+function displayMonsters(monster, index) {
+  const forward = document.querySelector('#forward')
+  const backward = document.querySelector('#back')
+  let currentMonster = {...monster}
+  back.addEventListener('click', () => {
+    if(monster.id > 50 && monster.id % 50 === 0) {
+      renderOneMonster
+    }
+  })
 }
